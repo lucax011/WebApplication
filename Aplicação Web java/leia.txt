@@ -1,0 +1,1 @@
+Projeto desenvolvido no archetype maven org, java 1.7, dynamic web system 3.1.
