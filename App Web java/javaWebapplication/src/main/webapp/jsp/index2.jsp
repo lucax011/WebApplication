@@ -21,21 +21,24 @@
 	<div class="caixa-intro">
 		<h1>Cadastre-se</h1>
 		<div class="intro-content">
-			<form method="post"
-				action="http://localhost:8080/javaWebapplication/RegisterUser">
+			<form>
 				<div class="form-caixa">
 					<label class="" for="name">Nome </label> <input type="text"
-						name="nome" id="nome"> <label class="" for="suname">Sobrenome</label>
-					<input type="text" name="sobrenome" id="sobrenome" required>
+						name="nome" id="nome" autocomplete="first-name"> <label class="" for="suname">Sobrenome</label>
+					<input type="text" name="sobrenome" id="sobrenome" autocomplete="family-name" required>
 					<label class="" for="E-mail">E-mail</label> <input type="text"
-						name="e-mail" id="e-mail" placeholder="" required> <label
+						name="e-mail" id="e-mail" autocomplete="on" required> <label
 						class="" for="">Senha</label> <input type="password" name="senha"
-						id="senha" required>
+						id="senha" autocomplete="current-password" required>
 				</div>
-				<button class="button" value="Registre-se" type="submit" id="button">Registre-se</button>
+				<button class="button" value="Registre-se" type="submit" id="buttonRegister">Registre-se</button>
 			</form>
 		</div>
 	</div>
 
 </body>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../js/register.js"></script>
+  
 </html>

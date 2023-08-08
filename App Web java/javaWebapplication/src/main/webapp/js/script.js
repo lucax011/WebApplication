@@ -1,13 +1,56 @@
+const buttonAlterar = document.querySelector('.buttonAlterar');
+const modal = document.getElementById('modal');
+const closeBtn = document.querySelector('.close');
+const buttonAlterarAgendamento = document.querySelector('#buttonAlterarAgendamento');
+
+function checkAuthentication() {
+    const isAuthenticated = sessionStorage.getItem("username");
+    if (!isAuthenticated) {
+        window.location.href = "index.jsp"; // Redirecionar para a página de login
+    }
+}
+closeBtn.addEventListener('click', function() {
+	modal.style.display = 'none';
+});
+
+
+window.addEventListener('click', function(event) {
+	if (event.target == modal) {
+		modal.style.display = 'none';
+	}
+});
+
+buttonAlterar.addEventListener('click', function(event) {
+	selectedAgendamento = getSelectedAlterarAgendamento();
+
+	if (selectedAgendamento != null) {
+
+		console.log(selectedAgendamento);
+		modal.style.display = 'block';
+		getOptions();
+
+	} else {
+		event.preventDefault();
+		alert('Selecione um item da tabela antes de abrir o modal.');
+
+	}
+});
+
+buttonAlterarAgendamento.addEventListener('click', function() {
+	alterarAgendamento(selectedAgendamento);
+})
+
+
 $(document).ready(function() {
 
 	getOptions();
-	getOptions2();
-	getOptions3();
-	getOptions4();
 	setAgendamento();
 	getAgendamentos();
-
 });
+
+
+
+//requests
 
 function setAgendamento() {
 	$("#button")
@@ -22,7 +65,7 @@ function setAgendamento() {
 				var dia = $("#selectOpcoesDia").val();
 				var hora = $("#selectOpcoesHora").val();
 
-				var data = {
+				let data = {
 					atendente: atendente,
 					servico: servico,
 					dia: dia,
@@ -33,12 +76,12 @@ function setAgendamento() {
 						url: "http://localhost:8080/javaWebapplication/AgendarUser",
 						type: "POST",
 						data: data,
-						success: function(response) {
+						success: function() {
 							console
 								.log("Agendamento realizado com sucesso!");
 							getAgendamentos();
 						},
-						error: function(xhr, status, error) {
+						error: function(error) {
 							console
 								.log("Erro na chamada do servlet: "
 									+ error);
@@ -66,7 +109,7 @@ function getAgendamentos() {
 					});
 
 			},
-			error: function(xhr, status, error) {
+			error: function(error) {
 				console.log("Erro na chamada do servlet: " + error);
 			}
 		});
@@ -84,13 +127,11 @@ function getOptions() {
 				$("#selectOpcoesAtendente1").empty();
 				$("#selectOpcoesAtendente1").html(response);
 			},
-			error: function(xhr, status, error) {
+			error: function(error) {
 				console.log("Erro na chamada do servlet: " + error);
 			}
 		});
-}
 
-function getOptions2() {
 	$
 		.ajax({
 			url: "http://localhost:8080/javaWebapplication/GetOptionsFormHora",
@@ -102,13 +143,13 @@ function getOptions2() {
 				$("#selectOpcoesHora1").empty();
 				$("#selectOpcoesHora1").html(response);
 			},
-			error: function(xhr, status, error) {
+			error: function(error) {
 				console.log("Erro na chamada do servlet: " + error);
 			}
 		});
-}
 
-function getOptions3() {
+
+
 	$
 		.ajax({
 			url: "http://localhost:8080/javaWebapplication/GetOptionFormData",
@@ -120,13 +161,13 @@ function getOptions3() {
 				$("#selectOpcoesDia1").empty();
 				$("#selectOpcoesDia1").html(response);
 			},
-			error: function(xhr, status, error) {
+			error: function(error) {
 				console.log("Erro na chamada do servlet: " + error);
 			}
 		});
-}
 
-function getOptions4() {
+
+
 	$
 		.ajax({
 			url: "http://localhost:8080/javaWebapplication/GetOptionsFormService",
@@ -138,12 +179,14 @@ function getOptions4() {
 				$("#selectOpcoesServico1").empty();
 				$("#selectOpcoesServico1").html(response);
 			},
-			error: function(xhr, status, error) {
+			error: function(error) {
 				console.log("Erro na chamada do servlet: " + error);
 			}
 		});
-
 }
+
+
+
 
 
 function getSelectedAgendamentos() {
@@ -155,6 +198,8 @@ function getSelectedAgendamentos() {
 		});
 	return selectedAgendamentos;
 }
+
+
 
 // Botão para excluir agendamentos selecionados
 $(document).on("click", ".buttonExcluded", function() {
@@ -180,7 +225,7 @@ function excluirAgendamento(idAgendamento) {
 				alert(response);
 				getAgendamentos();
 			},
-			error: function(xhr, status, error) {
+			error: function(error) {
 				console.log("Erro na chamada do servlet: " + error);
 			}
 		});
@@ -203,7 +248,7 @@ function alterarAgendamento(idAgendamento) {
 	let novoDia = $("#selectOpcoesDia1").val();
 	let novoHora = $("#selectOpcoesHora1").val();
 
-	// Converter idAgendamento para inteiro
+
 	idAgendamento = parseInt(idAgendamento);
 
 	$.ajax({
@@ -216,49 +261,13 @@ function alterarAgendamento(idAgendamento) {
 			novoDia: novoDia,
 			novoHora: novoHora
 		},
-		success: function(response) {
-			
+		success: function() {
+
 			getAgendamentos();
 		},
-		error: function(xhr, status, error) {
+		error: function(error) {
 			console.log("Erro na chamada do servlet: " + error);
 		}
 	});
 }
-const buttonAlterar = document.querySelector('.buttonAlterar');
-const modal = document.getElementById('modal');
-const closeBtn = document.querySelector('.close');
-const buttonAlterarAgendamento = document.querySelector('#buttonAlterarAgendamento');
-closeBtn.addEventListener('click', function() {
-	modal.style.display = 'none';
-});
 
-
-window.addEventListener('click', function(event) {
-	if (event.target == modal) {
-		modal.style.display = 'none';
-	}
-});
-
-buttonAlterar.addEventListener('click', function(event) {
-	selectedAgendamento = getSelectedAlterarAgendamento();
-
-	if (selectedAgendamento != null) {
-
-		console.log(selectedAgendamento);
-		modal.style.display = 'block';
-		getOptions();
-		getOptions2();
-		getOptions3();
-		getOptions4();
-
-	} else {
-		event.preventDefault();
-		alert('Selecione um item da tabela antes de abrir o modal.');
-
-	}
-});
-
-buttonAlterarAgendamento.addEventListener('click', function() {
-		alterarAgendamento(selectedAgendamento);
-	})

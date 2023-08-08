@@ -7,7 +7,7 @@
   <title>Nubarberia</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body onload="checkAuthentication()">
   <header class="header-page">
     <h1 class="header-title">
       <img class="" src="../img/Logo-circulo-barbearia-1024x1024-removebg-preview.png" alt="">
@@ -77,5 +77,6 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../js/script.js"></script>
+
 </body>
 </html>

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import javaWebApplication.Beans.RegisterBean;
 import javaWebApplication.Model.UserDb;
 
@@ -42,7 +44,9 @@ public class RegisterUser extends HttpServlet {
 		String sobrenome = request.getParameter("sobrenome");
 		String email = request.getParameter("e-mail");
 		String password = request.getParameter("senha");
+		 	
 	
+
 		RegisterBean user= new RegisterBean(nome,sobrenome,email,password);
 		
 		user.setSobreome(sobrenome);
@@ -55,12 +59,17 @@ public class RegisterUser extends HttpServlet {
 		UserDb userDb = new UserDb();
 		
 		String s1 = userDb.insertUser(user);
-		if(s1.equalsIgnoreCase("Insert concluded")){
-		
-			response.sendRedirect("http://localhost:8080/javaWebapplication/webapp/jsp/index3.jsp");
-		} else {
-		out.println("cadastro invalido");
-		}
+		 if (s1.equalsIgnoreCase("Insert concluded")) {
+	            JSONObject json = new JSONObject();
+	            json.put("success", true);
+	            json.put("message", "Cadastro realizado com sucesso!");
+	            out.print(json.toString());
+	        } else {
+	            JSONObject json = new JSONObject();
+	            json.put("success", false);
+	            json.put("message", "Erro no cadastro: " + s1);
+	            out.print(json.toString());
+	        }
 	}
 
 	/**

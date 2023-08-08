@@ -6,6 +6,9 @@
 	padding: 0;
 }
 
+.error-message {
+    color: red;
+}
 body {
 	text-align: center;
 	font-family: 'Open Sans', sans-serif;
@@ -25,6 +28,7 @@ body {
 .header-title {
 	font-size: 30px;
 }
+
 
 .header-title img {
 	width: 75px;
